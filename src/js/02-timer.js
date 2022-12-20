@@ -36,8 +36,6 @@ function onStartBtnClick(event) {
     let timeDif = timerSet - Date.now();
     let timeObj = convertMs(timeDif);
 
-    console.log(timeDif);
-
     if (timeDif < 1000) {
       clearInterval(timerId);
     }
