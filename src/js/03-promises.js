@@ -42,7 +42,3 @@ function createPromise(position, delay) {
     }, delay);
   });
 }
-
-function resetSettings(x, y, z) {
-  x = 0;
-}
