@@ -15,11 +15,11 @@ let startDelay = 0;
 function onFormSubmit(event) {
   event.preventDefault();
 
-  amount = Number(event.currentTarget.amount.value);
+  amountValue = Number(event.currentTarget.amount.value);
   startDelay = Number(event.currentTarget.delay.value);
   delayStep = Number(event.currentTarget.step.value);
 
-  for (let i = 1; i <= amount; i++) {
+  for (let i = 1; i <= amountValue; i++) {
     createPromise(i, startDelay)
       .then(result => console.log(result))
       .catch(error => console.log(error));
