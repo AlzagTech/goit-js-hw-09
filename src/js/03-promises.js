@@ -5,10 +5,10 @@ Notify.init({
 });
 
 const resf = {
-  formRef: document.querySelector('form'),
+  form: document.querySelector('form'),
 };
 
-resf.formRef.addEventListener('submit', onFormSubmit);
+resf.form.addEventListener('submit', onFormSubmit);
 
 let startDelay = 0;
 
