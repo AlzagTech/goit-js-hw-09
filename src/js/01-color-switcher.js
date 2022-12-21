@@ -11,8 +11,7 @@ refs.stopBtn.setAttribute('disabled', '');
 let timeId = null;
 
 function onStartBtnClick(event) {
-  refs.startBtn.setAttribute('disabled', '');
-  refs.stopBtn.removeAttribute('disabled', '');
+  setDisabledAttr(refs.startBtn, refs.stopBtn);
 
   timeId = setInterval(() => {
     refs.body.style.backgroundColor = `${getRandomHexColor()}`;
@@ -20,10 +19,13 @@ function onStartBtnClick(event) {
 }
 
 function onStopBtnClick(event) {
-  refs.startBtn.removeAttribute('disabled', '');
-  refs.stopBtn.setAttribute('disabled', '');
-
+  setDisabledAttr(refs.stopBtn, refs.startBtn);
   clearInterval(timeId);
+}
+
+function setDisabledAttr(elRefForSetAttr, elRefForRemoveAttr) {
+  elRefForSetAttr.setAttribute('disabled', '');
+  elRefForRemoveAttr.removeAttribute('disabled', '');
 }
 
 function getRandomHexColor() {
