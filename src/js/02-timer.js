@@ -5,6 +5,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const refs = {
   input: document.querySelector('input#datetime-picker'),
   btn: document.querySelector('[data-start]'),
+  timer: document.querySelector('.timer'),
 };
 
 refs.btn.setAttribute('disabled', '');
@@ -17,10 +18,10 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (selectedDates[0].getTime() < Date.now()) {
+    timerSet = selectedDates[0].getTime();
+    if (timerSet < Date.now()) {
       Notify.failure('Please choose a date in the future');
     } else {
-      timerSet = selectedDates[0].getTime();
       refs.btn.removeAttribute('disabled');
     }
   },
@@ -40,12 +41,16 @@ function onStartBtnClick(event) {
       clearInterval(timerId);
     }
 
-    const keys = Object.keys(timeObj);
-
-    for (const key of keys) {
-      document.querySelector(`[data-${key}]`).textContent = pad(timeObj[key]);
-    }
+    changeTimerTextContent(timeObj);
   }, 1000);
+}
+
+function changeTimerTextContent(obj) {
+  const keys = Object.keys(obj);
+
+  for (const key of keys) {
+    refs.timer.querySelector(`[data-${key}]`).textContent = pad(obj[key]);
+  }
 }
 
 function pad(value) {
