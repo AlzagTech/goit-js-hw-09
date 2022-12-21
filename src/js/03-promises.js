@@ -10,19 +10,23 @@ const resf = {
 
 resf.form.addEventListener('submit', onFormSubmit);
 
-let startDelay = 0;
-
 function onFormSubmit(event) {
   event.preventDefault();
 
-  const amountValue = Number(event.currentTarget.amount.value);
-  startDelay = Number(event.currentTarget.delay.value);
-  const delayStep = Number(event.currentTarget.step.value);
+  const { amount, delay, step } = event.target;
+
+  let startDelay = Number(delay.value);
+  const amountValue = Number(amount.value);
+  const delayStep = Number(step.value);
 
   for (let i = 1; i <= amountValue; i++) {
     createPromise(i, startDelay)
-      .then(result => console.log(result))
-      .catch(error => console.log(error));
+      .then(({ position, delay }) => {
+        Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`);
+      })
+      .catch(({ position, delay }) => {
+        Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`);
+      });
     startDelay += delayStep;
   }
 }
@@ -33,11 +37,9 @@ function createPromise(position, delay) {
 
     setTimeout(() => {
       if (shouldResolve) {
-        reslove(
-          Notify.success(`✅ Fulfilled promise ${position} in ${delay}ms`)
-        );
+        reslove({ position, delay });
       } else {
-        reject(Notify.failure(`❌ Rejected promise ${position} in ${delay}ms`));
+        reject({ position, delay });
       }
     }, delay);
   });
